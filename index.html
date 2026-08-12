@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كاشير برو - POS System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/vendor/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- شاشة القفل -->
+    <div class="lock-screen" id="lockScreen">
+        <h2>🔒 أدخل الرقم السري</h2>
+        <input type="password" class="form-control lock-input" id="pinInput" maxlength="4" oninput="checkPin(this.value)">
+        <small style="color:#999; margin-top:10px;">الرمز الافتراضي: 1234</small>
+        <small style="color:#dc3545; margin-top:15px; cursor:pointer; text-decoration:underline;" onclick="resetPin()">نسيت الرقم السري؟</small>
+    </div>
+
+    <!-- الواجهة الرئيسية -->
+    <div class="app-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><h2>🧾 كاشير برو</h2><small style="color: #28a745;">✅ يعمل محلياً</small></div>
+            <nav class="nav-menu" id="navMenu"></nav>
+        </aside>
+        
+        <main class="main-content" id="mainContent">
+            <header class="navbar">
+                <button class="btn btn-primary" onclick="toggleSidebar()">☰ القائمة</button>
+                <button class="btn btn-danger" onclick="lockApp()" style="margin-right:auto;">🔒 قفل</button>
+                
+                <div id="posNavControls" style="display: none; gap: 15px; align-items: center; margin-right: 10px;"></div>
+
+                <div style="margin-right: auto; display: flex; gap: 10px; position: relative; align-items: center;">
+                    <button class="btn btn-warning" onclick="toggleCalculator()">🧮 حاسبة</button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">🌙 الوضع الليلي</button>
+                    
+                    <!-- الآلة الحاسبة المنبثقة -->
+                    <div class="calc-popup" id="calcPopup">
+                        <div class="calc-screen" id="calcScreen">0</div>
+                        <div class="calc-keys">
+                            <button class="calc-btn clr" onclick="calcClear()">C</button>
+                            <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+                            <button class="calc-btn op" onclick="calcInput('*')">×</button>
+                            <button class="calc-btn op" onclick="calcDelete()">⌫</button>
+                            <button class="calc-btn" onclick="calcInput('7')">7</button>
+                            <button class="calc-btn" onclick="calcInput('8')">8</button>
+                            <button class="calc-btn" onclick="calcInput('9')">9</button>
+                            <button class="calc-btn op" onclick="calcInput('-')">-</button>
+                            <button class="calc-btn" onclick="calcInput('4')">4</button>
+                            <button class="calc-btn" onclick="calcInput('5')">5</button>
+                            <button class="calc-btn" onclick="calcInput('6')">6</button>
+                            <button class="calc-btn op" onclick="calcInput('+')">+</button>
+                            <button class="calc-btn" onclick="calcInput('1')">1</button>
+                            <button class="calc-btn" onclick="calcInput('2')">2</button>
+                            <button class="calc-btn" onclick="calcInput('3')">3</button>
+                            <button class="calc-btn eq" style="grid-row: span 2;" onclick="calcEquals()">=</button>
+                            <button class="calc-btn" style="grid-column: span 2;" onclick="calcInput('0')">0</button>
+                            <button class="calc-btn" onclick="calcInput('.')">.</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section class="container" id="viewContent"></section>
+        </main>
+    </div>
+
+    <!-- النوافذ المنبثقة والتنبيهات -->
+    <div class="modal-overlay" id="appModal"><div class="modal-box" id="appModalContent"></div></div>
+    <div class="toast" id="toastNotification"><span id="toastMessage">تمت العملية!</span></div>
+
+    <!-- استدعاء ملفات JS بالترتيب الصحيح -->
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/pos.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
